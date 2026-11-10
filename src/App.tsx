@@ -1,12 +1,21 @@
 
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Recipes from "./pages/Recipes";
-import Login from "./pages/Login";
 import RecipeDetails from "./pages/RecipeDetails";
+import AddRecipe from "./pages/AddRecipe";
+import Login from "./pages/Login";
+import { useRecipeStore } from "./store/useRecipeStore";
 
 function App() {
+  const loadRecipes = useRecipeStore((state) => state.loadRecipes);
+
+  useEffect(() => {
+    loadRecipes();
+  }, [loadRecipes]);
+
   return (
     <>
       <Navbar />
@@ -16,6 +25,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/recipes/:recipeId" element={<RecipeDetails />} />
+          <Route path="/addRecipe" element={<AddRecipe />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </main>

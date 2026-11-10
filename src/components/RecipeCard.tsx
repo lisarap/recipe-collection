@@ -12,7 +12,11 @@ function RecipeCard({ recipe }: RecipeCardProps) {
       <Link to={`/recipes/${recipe.id}`} className="recipe-card-link">
         {recipe.image ? (
           <img
-            src={`${import.meta.env.BASE_URL}${recipe.image}`}
+          src={
+                recipe.image.startsWith("data:")
+                    ? recipe.image
+                    : `${import.meta.env.BASE_URL}${recipe.image}`
+                }
             alt={recipe.name}
             className="recipe-image"
             loading="lazy"

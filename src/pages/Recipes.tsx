@@ -1,53 +1,42 @@
 
-import { useEffect, useState } from "react";
-import type { Recipe } from "../types/Recipe";
-import { getRecipes } from "../services/recipeService";
+import { useState } from "react";
 import RecipeCard from "../components/RecipeCard";
+import { useRecipeStore } from "../store/useRecipeStore";
 
 function Recipes() {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const { recipesList, fetchingDishes, loadError, loadRecipes } =
+    useRecipeStore();
+
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
 
-  useEffect(() => {
-    async function loadRecipes() {
-      try {
-        const data = await getRecipes();
-        setRecipes(data);
-      } catch {
-        setError("Couldn't load recipes. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadRecipes();
-  }, []);
-
   const categories = [
     "All",
-    ...new Set(recipes.map((recipe) => recipe.category))
+    ...new Set(recipesList.map((dish) => dish.category))
   ];
 
-  const filteredRecipes = recipes.filter((recipe) => {
-    const matchesSearch = recipe.name
+  const matchingDishes = recipesList.filter((dish) => {
+    const matchesSearch = dish.name
       .toLowerCase()
       .includes(search.toLowerCase());
 
     const matchesCategory =
-      category === "All" || recipe.category === category;
+      category === "All" || dish.category === category;
 
     return matchesSearch && matchesCategory;
   });
 
-  if (loading) {
+  if (fetchingDishes) {
     return <p role="status">Loading recipes...</p>;
   }
 
-  if (error) {
-    return <p role="alert">{error}</p>;
+  if (loadError) {
+    return (
+      <div>
+        <p role="alert">{loadError}</p>
+        <button onClick={loadRecipes}>Try again</button>
+      </div>
+    );
   }
 
   return (
@@ -74,25 +63,25 @@ function Recipes() {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            {categories.map((item) => (
-              <option key={item} value={item}>
-                {item}
+            {categories.map((mealType) => (
+              <option key={mealType} value={mealType}>
+                {mealType}
               </option>
             ))}
           </select>
         </div>
       </div>
 
-      {filteredRecipes.length === 0 ? (
+      {matchingDishes.length === 0 ? (
         <p>
-          {recipes.length === 0
+          {recipesList.length === 0
             ? "No recipes available yet."
             : "No recipes match your search."}
         </p>
       ) : (
         <div className="recipe-grid">
-          {filteredRecipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
+          {matchingDishes.map((dish) => (
+            <RecipeCard key={dish.id} recipe={dish} />
           ))}
         </div>
       )}
