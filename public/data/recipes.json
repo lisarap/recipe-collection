@@ -6,8 +6,20 @@
     "category": "Dinner",
     "cookingTime": 40,
     "description": "A simple pasta dish with a rich tomato and meat sauce.",
-    "ingredients": ["Spaghetti", "Minced beef", "Tomato sauce", "Onion", "Garlic"],
-    "instructions": ["Cook the spaghetti.", "Fry the onion, garlic and beef.", "Add tomato sauce and simmer.", "Serve with spaghetti."]
+    "image": "images/spaghetti.jpg",
+    "ingredients": [
+      "Spaghetti",
+      "Minced beef",
+      "Tomato sauce",
+      "Onion",
+      "Garlic"
+    ],
+    "instructions": [
+      "Cook the spaghetti.",
+      "Fry the onion, garlic and beef.",
+      "Add tomato sauce and simmer.",
+      "Serve with spaghetti."
+    ]
   },
   {
     "id": 2,
@@ -15,8 +27,20 @@
     "category": "Breakfast",
     "cookingTime": 20,
     "description": "Soft homemade pancakes for a quick breakfast.",
-    "ingredients": ["Flour", "Milk", "Egg", "Sugar", "Baking powder"],
-    "instructions": ["Mix the dry ingredients.", "Add milk and egg.", "Pour batter into a hot pan.", "Cook both sides until golden."]
+    "image": "images/pancakes.jpg",
+    "ingredients": [
+      "Flour",
+      "Milk",
+      "Egg",
+      "Sugar",
+      "Baking powder"
+    ],
+    "instructions": [
+      "Mix the dry ingredients.",
+      "Add milk and egg.",
+      "Pour batter into a hot pan.",
+      "Cook both sides until golden."
+    ]
   },
   {
     "id": 3,
@@ -24,8 +48,20 @@
     "category": "Lunch",
     "cookingTime": 30,
     "description": "Fried rice with chicken, eggs and vegetables.",
-    "ingredients": ["Rice", "Chicken", "Eggs", "Carrots", "Soy sauce"],
-    "instructions": ["Cook the chicken thoroughly.", "Scramble the eggs.", "Add vegetables and cooked rice.", "Mix in soy sauce and stir-fry."]
+    "image": "images/friedrice.jpg",
+    "ingredients": [
+      "Rice",
+      "Chicken",
+      "Eggs",
+      "Carrots",
+      "Soy sauce"
+    ],
+    "instructions": [
+      "Cook the chicken thoroughly.",
+      "Scramble the eggs.",
+      "Add vegetables and cooked rice.",
+      "Mix in soy sauce and stir-fry."
+    ]
   },
   {
     "id": 4,
@@ -33,8 +69,20 @@
     "category": "Breakfast",
     "cookingTime": 10,
     "description": "A quick and easy omelette filled with cheese.",
-    "ingredients": ["Eggs", "Cheese", "Milk", "Salt", "Butter"],
-    "instructions": ["Beat the eggs with milk.", "Melt butter in a pan.", "Pour in the eggs.", "Add cheese and fold the omelette."]
+    "image": "images/omelette.jpg",
+    "ingredients": [
+      "Eggs",
+      "Cheese",
+      "Milk",
+      "Salt",
+      "Butter"
+    ],
+    "instructions": [
+      "Beat the eggs with milk.",
+      "Melt butter in a pan.",
+      "Pour in the eggs.",
+      "Add cheese and fold the omelette."
+    ]
   },
   {
     "id": 5,
@@ -42,8 +90,20 @@
     "category": "Dinner",
     "cookingTime": 25,
     "description": "Pasta mixed with a creamy garlic sauce.",
-    "ingredients": ["Pasta", "Cream", "Garlic", "Parmesan", "Butter"],
-    "instructions": ["Boil the pasta.", "Cook garlic in butter.", "Add cream and parmesan.", "Mix the pasta into the sauce."]
+    "image": "images/creamypasta.jpg",
+    "ingredients": [
+      "Pasta",
+      "Cream",
+      "Garlic",
+      "Parmesan",
+      "Butter"
+    ],
+    "instructions": [
+      "Boil the pasta.",
+      "Cook garlic in butter.",
+      "Add cream and parmesan.",
+      "Mix the pasta into the sauce."
+    ]
   },
   {
     "id": 6,
@@ -51,8 +111,20 @@
     "category": "Dinner",
     "cookingTime": 35,
     "description": "A tasty vegetable curry made with coconut milk.",
-    "ingredients": ["Potatoes", "Carrots", "Coconut milk", "Curry powder", "Onion"],
-    "instructions": ["Chop the vegetables.", "Fry onion and curry powder.", "Add vegetables and coconut milk.", "Simmer until the vegetables are cooked."]
+    "image": "images/vegetablecurry.jpg",
+    "ingredients": [
+      "Potatoes",
+      "Carrots",
+      "Coconut milk",
+      "Curry powder",
+      "Onion"
+    ],
+    "instructions": [
+      "Chop the vegetables.",
+      "Fry onion and curry powder.",
+      "Add vegetables and coconut milk.",
+      "Simmer until the vegetables are cooked."
+    ]
   },
   {
     "id": 7,
@@ -60,8 +132,17 @@
     "category": "Snack",
     "cookingTime": 10,
     "description": "A crispy sandwich with melted cheese inside.",
-    "ingredients": ["Bread", "Cheese", "Butter"],
-    "instructions": ["Butter the bread.", "Place cheese between two slices.", "Toast in a pan until golden on both sides."]
+    "image": "images/grilledcheese.jpg",
+    "ingredients": [
+      "Bread",
+      "Cheese",
+      "Butter"
+    ],
+    "instructions": [
+      "Butter the bread.",
+      "Place cheese between two slices.",
+      "Toast in a pan until golden on both sides."
+    ]
   },
   {
     "id": 8,
@@ -69,8 +150,20 @@
     "category": "Lunch",
     "cookingTime": 25,
     "description": "A tortilla wrap with seasoned chicken and fresh vegetables.",
-    "ingredients": ["Tortilla", "Chicken", "Lettuce", "Tomato", "Mayonnaise"],
-    "instructions": ["Season and fully cook the chicken.", "Chop the vegetables.", "Add everything to the tortilla.", "Roll the tortilla into a wrap."]
+    "image": "images/chickenwrap.jpg",
+    "ingredients": [
+      "Tortilla",
+      "Chicken",
+      "Lettuce",
+      "Tomato",
+      "Mayonnaise"
+    ],
+    "instructions": [
+      "Season and fully cook the chicken.",
+      "Chop the vegetables.",
+      "Add everything to the tortilla.",
+      "Roll the tortilla into a wrap."
+    ]
   },
   {
     "id": 9,
@@ -78,8 +171,18 @@
     "category": "Drinks",
     "cookingTime": 5,
     "description": "A refreshing banana smoothie made with milk and honey.",
-    "ingredients": ["Banana", "Milk", "Honey", "Ice"],
-    "instructions": ["Peel and slice the banana.", "Add everything to a blender.", "Blend until smooth and serve."]
+    "image": "images/bananasmoothie.jpg",
+    "ingredients": [
+      "Banana",
+      "Milk",
+      "Honey",
+      "Ice"
+    ],
+    "instructions": [
+      "Peel and slice the banana.",
+      "Add everything to a blender.",
+      "Blend until smooth and serve."
+    ]
   },
   {
     "id": 10,
@@ -87,7 +190,19 @@
     "category": "Dessert",
     "cookingTime": 5,
     "description": "A quick chocolate cake made in a mug.",
-    "ingredients": ["Flour", "Cocoa powder", "Sugar", "Milk", "Oil"],
-    "instructions": ["Mix the dry ingredients in a mug.", "Add milk and oil.", "Mix until smooth.", "Microwave in a microwave-safe mug until cooked."]
+    "image": "images/mugcake.jpg",
+    "ingredients": [
+      "Flour",
+      "Cocoa powder",
+      "Sugar",
+      "Milk",
+      "Oil"
+    ],
+    "instructions": [
+      "Mix the dry ingredients in a mug.",
+      "Add milk and oil.",
+      "Mix until smooth.",
+      "Microwave in a microwave-safe mug until cooked."
+    ]
   }
 ]

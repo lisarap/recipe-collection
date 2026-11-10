@@ -1,3 +1,4 @@
+
 export type Recipe = {
   id: number;
   name: string;
@@ -6,4 +7,5 @@ export type Recipe = {
   description: string;
   ingredients: string[];
   instructions: string[];
+  image?: string;
 };
