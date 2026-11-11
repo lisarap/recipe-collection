@@ -491,3 +491,49 @@ body {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+
+.login-page {
+  max-width: 480px;
+  margin: 40px auto;
+}
+
+.login-page h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.login-page > p {
+  color: #666;
+}
+
+.demo-login-info {
+  font-size: 13px;
+  color: #666;
+  margin-top: 15px;
+}
+
+.nav-links {
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-user {
+  color: #385c44;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.logout-btn {
+  background-color: #385c44;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 15px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #294533;
+}
+

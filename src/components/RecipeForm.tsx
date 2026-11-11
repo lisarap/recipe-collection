@@ -1,12 +1,10 @@
 
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import type { Recipe } from "../types/Recipe";
-
-type RecipeDraft = Omit<Recipe, "id" | "isUserRecipe">;
+import type { Recipe, RecipeInput } from "../types/Recipe";
 
 type RecipeFormProps = {
   startingDish?: Recipe;
-  onSave: (recipeDraft: RecipeDraft) => void;
+  onSave: (recipeDraft: RecipeInput) => void;
   buttonText: string;
 };
 
@@ -153,7 +151,7 @@ function RecipeForm({ startingDish, onSave, buttonText }: RecipeFormProps) {
       description: recipeDraft.description.trim(),
       ingredients: ingredientList,
       instructions: cookingSteps,
-      image: dishPhotoPreview || undefined
+      image: dishPhotoPreview || undefined,
     });
   }
 

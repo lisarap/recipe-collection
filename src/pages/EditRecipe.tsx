@@ -3,11 +3,13 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import RecipeForm from "../components/RecipeForm";
 import { useRecipeStore } from "../store/useRecipeStore";
-import type { Recipe } from "../types/Recipe";
+import type { RecipeInput } from "../types/Recipe";
+import { useAuthStore } from "../store/useAuthStore";
 
 function EditRecipe() {
   const { recipeId } = useParams();
   const navigate = useNavigate();
+  const currentUser = useAuthStore((state) => state.currentUser);
 
   const {
     recipesList,
@@ -40,7 +42,10 @@ function EditRecipe() {
     );
   }
 
-  if (pickedDish.isUserRecipe !== true) {
+    if (
+        pickedDish.isUserRecipe !== true ||
+        pickedDish.ownerId !== currentUser
+    ) {
     return (
       <section>
         <h1>Recipe cannot be edited</h1>
@@ -52,7 +57,7 @@ function EditRecipe() {
     );
   }
 
-  function saveEditedDish(recipeDraft: Omit<Recipe, "id" | "isUserRecipe">) {
+  function saveEditedDish(recipeDraft: RecipeInput) {
     const saved = editRecipe(Number(recipeId), recipeDraft);
 
     if (saved) {

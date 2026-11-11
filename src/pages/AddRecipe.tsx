@@ -1,8 +1,9 @@
 
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RecipeForm from "../components/RecipeForm";
 import { useRecipeStore } from "../store/useRecipeStore";
-import type { Recipe } from "../types/Recipe";
+import type { RecipeInput } from "../types/Recipe";
 
 function AddRecipe() {
   const navigate = useNavigate();
@@ -10,8 +11,15 @@ function AddRecipe() {
   const { addRecipe, hasLoaded, fetchingDishes, loadError } =
     useRecipeStore();
 
-  function saveNewDish(recipeDraft: Omit<Recipe, "id" | "isUserRecipe">) {
+  const [saveError, setSaveError] = useState("");
+
+  function saveNewDish(recipeDraft: RecipeInput) {
     const newRecipeId = addRecipe(recipeDraft);
+
+    if (newRecipeId === null) {
+      setSaveError("Please log in before adding a recipe.");
+      return;
+    }
 
     navigate(`/recipes/${newRecipeId}`, {
       state: { notice: "Recipe added successfully." }
@@ -30,6 +38,8 @@ function AddRecipe() {
     <section className="add-recipe-page">
       <h1>Add a New Recipe</h1>
       <p>Share one of your favourite recipes.</p>
+
+      {saveError && <p role="alert">{saveError}</p>}
 
       <RecipeForm
         onSave={saveNewDish}

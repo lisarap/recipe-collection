@@ -7,11 +7,13 @@ import {
   useParams
 } from "react-router-dom";
 import { useRecipeStore } from "../store/useRecipeStore";
+import { useAuthStore } from "../store/useAuthStore";
 
 function RecipeDetails() {
   const { recipeId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const currentUser = useAuthStore((state) => state.currentUser);
 
   const {
     recipesList,
@@ -27,8 +29,13 @@ function RecipeDetails() {
     (dish) => dish.id === Number(recipeId)
   );
 
+  const canManageRecipe =
+    currentUser !== null &&
+    pickedDish?.isUserRecipe === true &&
+    pickedDish.ownerId === currentUser;
+
   function removePickedDish() {
-    if (!pickedDish || pickedDish.isUserRecipe !== true) return;
+    if (!pickedDish || !canManageRecipe) return;
 
     const confirmed = window.confirm(
       `Are you sure you want to delete "${pickedDish.name}"?`
@@ -108,7 +115,7 @@ function RecipeDetails() {
         ))}
       </ol>
 
-      {pickedDish.isUserRecipe === true && (
+      {canManageRecipe && (
         <div className="recipe-actions">
           <Link
             to={`/editRecipe/${pickedDish.id}`}

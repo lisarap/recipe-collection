@@ -1,7 +1,8 @@
 
 import { create } from "zustand";
-import type { Recipe } from "../types/Recipe";
+import type { Recipe, RecipeInput } from "../types/Recipe";
 import { getRecipes } from "../services/recipeService";
+import { useAuthStore } from "./useAuthStore";
 
 type RecipeStore = {
   recipesList: Recipe[];
@@ -9,11 +10,8 @@ type RecipeStore = {
   hasLoaded: boolean;
   loadError: string;
   loadRecipes: () => Promise<void>;
-  addRecipe: (recipeDraft: Omit<Recipe, "id">) => number;
-  editRecipe: (
-  recipeId: number,
-  updatedDish: Omit<Recipe, "id" | "isUserRecipe">
-  ) => boolean;
+  addRecipe: (recipeDraft: RecipeInput) => number | null;
+  editRecipe: (recipeId: number, updatedDish: RecipeInput) => boolean;
   deleteRecipe: (recipeId: number) => boolean;
 };
 
@@ -42,14 +40,20 @@ export const useRecipeStore = create<RecipeStore>((set, get) => ({
     }
   },
 
+
   addRecipe: (recipeDraft) => {
+    const accountName = useAuthStore.getState().currentUser;
+
+    if (!accountName) return null;
+
     const nextId =
       Math.max(0, ...get().recipesList.map((dish) => dish.id)) + 1;
 
-    const newDish = {
+    const newDish: Recipe = {
       ...recipeDraft,
       id: nextId,
-      isUserRecipe: true
+      isUserRecipe: true,
+      ownerId: accountName
     };
 
     set((current) => ({
@@ -60,41 +64,59 @@ export const useRecipeStore = create<RecipeStore>((set, get) => ({
   },
 
   editRecipe: (recipeId, updatedDish) => {
-  const pickedDish = get().recipesList.find(
-    (dish) => dish.id === recipeId
-  );
+    const accountName = useAuthStore.getState().currentUser;
 
-  if (!pickedDish || !pickedDish.isUserRecipe) {
-    return false;
-  }
+    const pickedDish = get().recipesList.find(
+      (dish) => dish.id === recipeId
+    );
 
-  set((current) => ({
-    recipesList: current.recipesList.map((dish) =>
-      dish.id === recipeId
-        ? { ...updatedDish, id: recipeId, isUserRecipe: true }
-        : dish
-    )
-  }));
+    if (
+      !accountName ||
+      pickedDish?.isUserRecipe !== true ||
+      pickedDish.ownerId !== accountName
+    ) {
+      return false;
+    }
 
-  return true;
+    set((current) => ({
+      recipesList: current.recipesList.map((dish) =>
+        dish.id === recipeId
+          ? {
+              ...updatedDish,
+              id: recipeId,
+              isUserRecipe: true,
+              ownerId: accountName
+            }
+          : dish
+      )
+    }));
+
+    return true;
   },
-  
-  deleteRecipe: (recipeId) => {
-  const pickedDish = get().recipesList.find(
-    (dish) => dish.id === recipeId
-  );
 
-  if (!pickedDish || !pickedDish.isUserRecipe) {
-    return false;
+  deleteRecipe: (recipeId) => {
+    const accountName = useAuthStore.getState().currentUser;
+
+    const pickedDish = get().recipesList.find(
+      (dish) => dish.id === recipeId
+    );
+
+    if (
+      !accountName ||
+      pickedDish?.isUserRecipe !== true ||
+      pickedDish.ownerId !== accountName
+    ) {
+      return false;
+    }
+
+    set((current) => ({
+      recipesList: current.recipesList.filter(
+        (dish) => dish.id !== recipeId
+      )
+    }));
+
+    return true;
   }
 
-  set((current) => ({
-    recipesList: current.recipesList.filter(
-      (dish) => dish.id !== recipeId
-    )
-  }));
-
-  return true;
-}
 
 }));

@@ -9,4 +9,10 @@ export type Recipe = {
   instructions: string[];
   image?: string;
   isUserRecipe?: boolean;
+  ownerId?: string;
 };
+
+export type RecipeInput = Omit<
+  Recipe,
+  "id" | "isUserRecipe" | "ownerId"
+>;

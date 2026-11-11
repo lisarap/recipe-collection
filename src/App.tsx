@@ -1,14 +1,18 @@
 
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
+
 import Home from "./pages/Home";
 import Recipes from "./pages/Recipes";
 import RecipeDetails from "./pages/RecipeDetails";
 import AddRecipe from "./pages/AddRecipe";
-import Login from "./pages/Login";
-import { useRecipeStore } from "./store/useRecipeStore";
 import EditRecipe from "./pages/EditRecipe";
+import Login from "./pages/Login";
+
+import { useRecipeStore } from "./store/useRecipeStore";
 
 function App() {
   const loadRecipes = useRecipeStore((state) => state.loadRecipes);
@@ -26,9 +30,22 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/recipes/:recipeId" element={<RecipeDetails />} />
-          <Route path="/addRecipe" element={<AddRecipe />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/editRecipe/:recipeId" element={<EditRecipe />} />
+
+          <Route element={<ProtectedRoute />}>
+            <Route path="/addRecipe" element={<AddRecipe />} />
+            <Route path="/editRecipe/:recipeId" element={<EditRecipe />} />
+          </Route>
+
+          <Route
+            path="*"
+            element={
+              <section>
+                <h1>Page not found</h1>
+                <p>Sorry, we couldn't find that page.</p>
+              </section>
+            }
+          />
         </Routes>
       </main>
     </>
