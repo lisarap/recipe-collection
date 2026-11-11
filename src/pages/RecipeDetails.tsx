@@ -1,28 +1,65 @@
 
-import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useParams
+} from "react-router-dom";
 import { useRecipeStore } from "../store/useRecipeStore";
 
 function RecipeDetails() {
   const { recipeId } = useParams();
-  const { recipesList, fetchingDishes, loadError } = useRecipeStore();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const {
+    recipesList,
+    fetchingDishes,
+    hasLoaded,
+    loadError,
+    deleteRecipe
+  } = useRecipeStore();
+
+  const [deleteError, setDeleteError] = useState("");
 
   const pickedDish = recipesList.find(
     (dish) => dish.id === Number(recipeId)
   );
 
-  if (fetchingDishes) {
-    return <p role="status">Loading recipe...</p>;
+  function removePickedDish() {
+    if (!pickedDish || pickedDish.isUserRecipe !== true) return;
+
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${pickedDish.name}"?`
+    );
+
+    if (!confirmed) return;
+
+    const removed = deleteRecipe(pickedDish.id);
+
+    if (removed) {
+      navigate("/recipes", {
+        state: { notice: `"${pickedDish.name}" was deleted successfully.` }
+      });
+    } else {
+      setDeleteError("Couldn't delete this recipe.");
+    }
   }
 
   if (loadError) {
     return <p role="alert">{loadError}</p>;
   }
 
+  if (!hasLoaded || fetchingDishes) {
+    return <p role="status">Loading recipe...</p>;
+  }
+
   if (!pickedDish) {
     return (
       <section>
         <h1>Recipe not found</h1>
-        <Link to="/recipes">Back to recipes</Link>
+        <Link to="/recipes">Back to Recipes</Link>
       </section>
     );
   }
@@ -32,6 +69,12 @@ function RecipeDetails() {
       <Link to="/recipes" className="back-link">
         Back to Recipes
       </Link>
+
+      {location.state?.notice && (
+        <p className="status-message" role="status">
+          {location.state.notice}
+        </p>
+      )}
 
       <h1>{pickedDish.name}</h1>
       <p>{pickedDish.description}</p>
@@ -64,6 +107,29 @@ function RecipeDetails() {
           <li key={index}>{step}</li>
         ))}
       </ol>
+
+      {pickedDish.isUserRecipe === true && (
+        <div className="recipe-actions">
+          <Link
+            to={`/editRecipe/${pickedDish.id}`}
+            className="edit-recipe-btn"
+          >
+            Edit Recipe
+          </Link>
+
+          <button
+            type="button"
+            className="delete-recipe-btn"
+            onClick={removePickedDish}
+          >
+            Delete Recipe
+          </button>
+        </div>
+      )}
+
+      {deleteError && (
+        <p role="alert">{deleteError}</p>
+      )}
     </section>
   );
 }

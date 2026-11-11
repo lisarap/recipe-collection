@@ -10,6 +10,11 @@ type RecipeStore = {
   loadError: string;
   loadRecipes: () => Promise<void>;
   addRecipe: (recipeDraft: Omit<Recipe, "id">) => number;
+  editRecipe: (
+  recipeId: number,
+  updatedDish: Omit<Recipe, "id" | "isUserRecipe">
+  ) => boolean;
+  deleteRecipe: (recipeId: number) => boolean;
 };
 
 export const useRecipeStore = create<RecipeStore>((set, get) => ({
@@ -43,7 +48,8 @@ export const useRecipeStore = create<RecipeStore>((set, get) => ({
 
     const newDish = {
       ...recipeDraft,
-      id: nextId
+      id: nextId,
+      isUserRecipe: true
     };
 
     set((current) => ({
@@ -51,5 +57,44 @@ export const useRecipeStore = create<RecipeStore>((set, get) => ({
     }));
 
     return nextId;
+  },
+
+  editRecipe: (recipeId, updatedDish) => {
+  const pickedDish = get().recipesList.find(
+    (dish) => dish.id === recipeId
+  );
+
+  if (!pickedDish || !pickedDish.isUserRecipe) {
+    return false;
   }
+
+  set((current) => ({
+    recipesList: current.recipesList.map((dish) =>
+      dish.id === recipeId
+        ? { ...updatedDish, id: recipeId, isUserRecipe: true }
+        : dish
+    )
+  }));
+
+  return true;
+  },
+  
+  deleteRecipe: (recipeId) => {
+  const pickedDish = get().recipesList.find(
+    (dish) => dish.id === recipeId
+  );
+
+  if (!pickedDish || !pickedDish.isUserRecipe) {
+    return false;
+  }
+
+  set((current) => ({
+    recipesList: current.recipesList.filter(
+      (dish) => dish.id !== recipeId
+    )
+  }));
+
+  return true;
+}
+
 }));

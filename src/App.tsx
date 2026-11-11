@@ -8,6 +8,7 @@ import RecipeDetails from "./pages/RecipeDetails";
 import AddRecipe from "./pages/AddRecipe";
 import Login from "./pages/Login";
 import { useRecipeStore } from "./store/useRecipeStore";
+import EditRecipe from "./pages/EditRecipe";
 
 function App() {
   const loadRecipes = useRecipeStore((state) => state.loadRecipes);
@@ -27,6 +28,7 @@ function App() {
           <Route path="/recipes/:recipeId" element={<RecipeDetails />} />
           <Route path="/addRecipe" element={<AddRecipe />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/editRecipe/:recipeId" element={<EditRecipe />} />
         </Routes>
       </main>
     </>

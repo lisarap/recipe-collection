@@ -2,11 +2,12 @@
 import { useState } from "react";
 import RecipeCard from "../components/RecipeCard";
 import { useRecipeStore } from "../store/useRecipeStore";
+import { useLocation } from "react-router-dom";
 
 function Recipes() {
   const { recipesList, fetchingDishes, loadError, loadRecipes } =
     useRecipeStore();
-
+  const location = useLocation();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
 
@@ -43,6 +44,11 @@ function Recipes() {
     <section className="recipes-page">
       <h1>Explore Recipes</h1>
       <p>Find something delicious to make today.</p>
+      {location.state?.notice && (
+        <p className="status-message" role="status">
+          {location.state.notice}
+        </p>
+      )}
 
       <div className="recipe-filters">
         <div className="filter-group">

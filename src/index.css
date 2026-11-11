@@ -447,3 +447,47 @@ body {
   }
 }
 
+
+.recipe-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.edit-recipe-btn,
+.delete-recipe-btn {
+  padding: 12px 22px;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.edit-recipe-btn {
+  background-color: #385c44;
+  color: white;
+  text-decoration: none;
+}
+
+.delete-recipe-btn {
+  background-color: white;
+  color: #b3261e;
+  border: 1px solid #b3261e;
+}
+
+.delete-recipe-btn:hover {
+  background-color: #fff0ee;
+}
+
+.status-message {
+  background-color: #e9f3eb;
+  color: #285039;
+  padding: 12px 15px;
+  border-radius: 6px;
+  margin: 15px 0;
+}
+
+.save-recipe-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
