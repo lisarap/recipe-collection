@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import RecipeCard from "../components/RecipeCard";
 import { useAuthStore } from "../store/useAuthStore";
@@ -16,7 +16,6 @@ function MyRecipes() {
     hasLoaded,
     loadError,
     loadRecipes,
-    editRecipe,
     deleteRecipe,
     publishRecipe
   } = useRecipeStore();
@@ -28,14 +27,29 @@ function MyRecipes() {
   const [actionNotice, setActionNotice] = useState("");
   const [actionError, setActionError] = useState("");
 
+  const [recipeToPublish, setRecipeToPublish] = useState<number | null>(null);
+  const publishDialog = useRef<HTMLDialogElement>(null);
+
   const myDishes = recipesList.filter(
     (dish) =>
       dish.isUserRecipe === true &&
       dish.ownerId === currentUser
   );
 
-  function publishMyDish(recipeId: number) {
-    const published = publishRecipe(recipeId);
+  function askToPublish(recipeId: number) {
+    setRecipeToPublish(recipeId);
+    publishDialog.current?.showModal();
+  }
+
+  function cancelPublish() {
+    publishDialog.current?.close();
+    setRecipeToPublish(null);
+  }
+
+  function confirmPublish() {
+    if (recipeToPublish === null) return;
+
+    const published = publishRecipe(recipeToPublish);
 
     if (published) {
       setActionError("");
@@ -44,6 +58,9 @@ function MyRecipes() {
       setActionNotice("");
       setActionError("Couldn't publish this recipe.");
     }
+
+    publishDialog.current?.close();
+    setRecipeToPublish(null);
   }
 
   function removeMyDish(recipeId: number, recipeName: string) {
@@ -117,9 +134,7 @@ function MyRecipes() {
               <RecipeCard recipe={dish} />
 
               <p className="recipe-visibility">
-                {dish.isPublished === true
-                  ? "Published"
-                  : "Private"}
+                {dish.isPublished === true ? "Published" : "Private"}
               </p>
 
               <div className="recipe-actions">
@@ -142,7 +157,7 @@ function MyRecipes() {
                   <button
                     type="button"
                     className="publish-recipe-btn"
-                    onClick={() => publishMyDish(dish.id)}
+                    onClick={() => askToPublish(dish.id)}
                   >
                     Publish
                   </button>
@@ -152,6 +167,46 @@ function MyRecipes() {
           ))}
         </div>
       )}
+
+      <dialog
+        ref={publishDialog}
+        className="publish-dialog"
+        aria-labelledby="publish-dialog-title"
+        onClose={() => setRecipeToPublish(null)}
+      >
+        <h2 id="publish-dialog-title">Publish Recipe?</h2>
+
+        <p>
+          Are you sure you want to publish this recipe? Once published,
+          your recipe will be visible to everyone on the main Recipes
+          page.
+        </p>
+
+        <p>
+          <strong>This action cannot be undone.</strong> You can still
+          edit or delete your recipe after publishing, but you won't
+          be able to unpublish it or make it private again.
+        </p>
+
+        <div className="publish-dialog-actions">
+          <button
+            type="button"
+            className="publish-cancel-btn"
+            onClick={cancelPublish}
+            autoFocus
+          >
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            className="publish-confirm-btn"
+            onClick={confirmPublish}
+          >
+            Yes, Publish
+          </button>
+        </div>
+      </dialog>
     </section>
   );
 }
