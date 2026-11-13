@@ -1,18 +1,65 @@
 
 import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 
 const homeImages = `${import.meta.env.BASE_URL}images/home/`;
 
 const foodCategories = [
-  { name: "Breakfast", image: "categoryBreakfast.png" },
-  { name: "Lunch", image: "categoryLunch.png" },
-  { name: "Dinner", image: "categoryDinner.png" },
-  { name: "Snack", image: "categorySnack.png" }
+  { name: "Breakfast", category: "Breakfast", image: "categoryBreakfast.png" },
+  { name: "Lunch", category: "Lunch", image: "categoryLunch.png" },
+  { name: "Dinner", category: "Dinner", image: "categoryDinner.png" },
+  { name: "Snack", category: "Snack", image: "categorySnack.png" },
+  { name: "Dessert", category: "Dessert", image: "categoryDessert.png" },
+  { name: "Drink", category: "Drinks", image: "categoryDrink.png" }
 ];
+
 
 function Home() {
   const currentUser = useAuthStore((state) => state.currentUser);
+
+  const categoryScroll = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  useEffect(() => {
+    const scrollArea = categoryScroll.current;
+
+    if (!scrollArea) return;
+
+    function checkArrows() {
+      if (!scrollArea) return;
+
+      setCanScrollLeft(scrollArea.scrollLeft > 5);
+
+      setCanScrollRight(
+        scrollArea.scrollLeft + scrollArea.clientWidth <
+        scrollArea.scrollWidth - 5
+      );
+    }
+
+    checkArrows();
+
+    window.addEventListener("resize", checkArrows);
+    scrollArea.addEventListener("scroll", checkArrows);
+
+    return () => {
+      window.removeEventListener("resize", checkArrows);
+      scrollArea.removeEventListener("scroll", checkArrows);
+    };
+  }, []);
+
+  function moveCategories(direction: number) {
+    const scrollArea = categoryScroll.current;
+
+    if (!scrollArea) return;
+
+    scrollArea.scrollBy({
+      left: direction * scrollArea.clientWidth * 0.8,
+      behavior: "smooth"
+    });
+  }
+
 
   return (
     <div className="goodfood-home">
@@ -90,6 +137,7 @@ function Home() {
         </div>
       </section>
 
+      
       <section className="category-section">
         <div className="category-inner">
           <h2>Explore by Category</h2>
@@ -100,25 +148,56 @@ function Home() {
             dish for any occasion, all in one place.
           </p>
 
-          <div className="category-grid">
-            {foodCategories.map((mealType) => (
-              <Link
-                to={`/recipes?category=${mealType.name}`}
-                className="category-tile"
-                key={mealType.name}
+          <div className="category-carousel">
+            {canScrollLeft && (
+              <button
+                type="button"
+                className="category-arrow category-arrow-left"
+                onClick={() => moveCategories(-1)}
+                aria-label="Scroll categories left"
               >
-                <img
-                  src={`${homeImages}${mealType.image}`}
-                  alt={`${mealType.name} recipes`}
-                  loading="lazy"
-                />
+                ‹
+              </button>
+            )}
 
-                <span>{mealType.name.toUpperCase()}</span>
-              </Link>
-            ))}
+            <div
+              className="category-grid"
+              ref={categoryScroll}
+              role="region"
+              aria-label="Recipe categories"
+              tabIndex={0}
+            >
+              {foodCategories.map((mealType) => (
+                <Link
+                  to={`/recipes?category=${mealType.category}`}
+                  className="category-tile"
+                  key={mealType.name}
+                >
+                  <img
+                    src={`${homeImages}${mealType.image}`}
+                    alt={`${mealType.name} recipes`}
+                    loading="lazy"
+                  />
+
+                  <span>{mealType.name.toUpperCase()}</span>
+                </Link>
+              ))}
+            </div>
+
+            {canScrollRight && (
+              <button
+                type="button"
+                className="category-arrow category-arrow-right"
+                onClick={() => moveCategories(1)}
+                aria-label="Scroll categories right"
+              >
+                ›
+              </button>
+            )}
           </div>
         </div>
       </section>
+
 
       <section className="closing-section">
         <h2>A LITTLE TASTE OF EVERYTHING.</h2>
