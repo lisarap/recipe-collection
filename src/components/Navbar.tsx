@@ -1,5 +1,5 @@
 
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 
 function Navbar() {
@@ -13,20 +13,25 @@ function Navbar() {
 
   return (
     <header className="header">
-      <nav className="navbar" aria-label="Main navigation">
-        <Link to="/" className="logo">
-          Good Food
-        </Link>
-
+      <nav className="navbar" aria-label="Good Food navigation">
         <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/recipes">Recipes</Link>
-          <Link to="/myRecipes">My Recipes</Link>
-          <Link to="/savedRecipes">Saved Recipes</Link>
+          <NavLink to="/" end>
+            Home
+          </NavLink>
+
+          <NavLink to="/myRecipes">
+            My Recipes
+          </NavLink>
+
+          <NavLink to="/savedRecipes">
+            Saved Recipes
+          </NavLink>
 
           {currentUser ? (
             <>
-              <span className="nav-user">Hi, {currentUser}</span>
+              <span className="nav-user">
+                Hi, {currentUser}
+              </span>
 
               <button
                 type="button"
@@ -37,7 +42,9 @@ function Navbar() {
               </button>
             </>
           ) : (
-            <Link to="/login">Login</Link>
+            <NavLink to="/login">
+              Login
+            </NavLink>
           )}
         </div>
       </nav>

@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import RecipeCard from "../components/RecipeCard";
 import { useRecipeStore } from "../store/useRecipeStore";
 
@@ -14,9 +14,10 @@ function Recipes() {
   } = useRecipeStore();
 
   const location = useLocation();
-
+  const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All");
+
+  const category = searchParams.get("category") ?? "All";
 
   const publicDishes = recipesList.filter(
     (dish) =>
@@ -42,12 +43,12 @@ function Recipes() {
 
   if (loadError) {
     return (
-      <div>
+      <section>
         <p role="alert">{loadError}</p>
         <button type="button" onClick={loadRecipes}>
           Try again
         </button>
-      </div>
+      </section>
     );
   }
 
@@ -83,7 +84,15 @@ function Recipes() {
           <select
             id="recipe-category"
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) => {
+              const pickedCategory = e.target.value;
+
+              setSearchParams(
+                pickedCategory === "All"
+                  ? {}
+                  : { category: pickedCategory }
+              );
+            }}
           >
             {categories.map((mealType) => (
               <option key={mealType} value={mealType}>

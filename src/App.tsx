@@ -1,6 +1,6 @@
 
 import { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -17,17 +17,20 @@ import Login from "./pages/Login";
 import { useRecipeStore } from "./store/useRecipeStore";
 
 function App() {
+  const location = useLocation();
   const loadRecipes = useRecipeStore((state) => state.loadRecipes);
 
   useEffect(() => {
     loadRecipes();
   }, [loadRecipes]);
 
+  const isHomePage = location.pathname === "/";
+
   return (
     <>
       <Navbar />
 
-      <main className="main-content">
+      <main className={isHomePage ? "main-content home-content" : "main-content"}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/recipes" element={<Recipes />} />
