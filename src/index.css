@@ -1493,3 +1493,153 @@ body {
     right: -8px;
   }
 }
+
+
+/* Sign-in popup */
+
+.auth-dialog {
+  position: fixed;
+  width: 90%;
+  max-width: 440px;
+  padding: 38px 30px 28px;
+  border: 1px solid #d8ddc9;
+  border-radius: 20px;
+  background-color: #fffaf0;
+  color: #252525;
+  text-align: center;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.2);
+}
+
+.auth-dialog::backdrop {
+  background-color: rgba(20, 30, 20, 0.55);
+}
+
+.auth-dialog[open] {
+  animation: authDialogEnter 0.2s ease-out;
+}
+
+@keyframes authDialogEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-dialog-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  color: #66715c;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.auth-dialog-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background-color: #e6ead9;
+  color: #385c44;
+  font-size: 36px;
+}
+
+.auth-dialog h2 {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  font-weight: normal;
+  color: #304735;
+  margin: 0 0 16px;
+}
+
+.auth-dialog p {
+  color: #62665c;
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 26px;
+}
+
+.auth-dialog-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-signin-btn,
+.auth-register-btn {
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.auth-signin-btn {
+  background-color: #385c44;
+  border: 1px solid #385c44;
+  color: white;
+}
+
+.auth-signin-btn:hover {
+  background-color: #294533;
+}
+
+.auth-register-btn {
+  background-color: transparent;
+  border: 1px solid #385c44;
+  color: #385c44;
+}
+
+.auth-register-btn:hover {
+  background-color: #e6ead9;
+}
+
+.auth-later-btn {
+  padding: 10px;
+  background: transparent;
+  border: none;
+  color: #777970;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.auth-later-btn:hover {
+  color: #385c44;
+  text-decoration: underline;
+}
+
+.auth-dialog button:focus-visible {
+  outline: 3px solid #b95432;
+  outline-offset: 3px;
+}
+
+@media (max-width: 500px) {
+  .auth-dialog {
+    padding: 35px 22px 24px;
+  }
+
+  .auth-dialog h2 {
+    font-size: 24px;
+  }
+
+  .auth-dialog p {
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-dialog[open] {
+    animation: none;
+  }
+}
