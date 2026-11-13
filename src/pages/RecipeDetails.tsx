@@ -8,11 +8,13 @@ import {
 } from "react-router-dom";
 import { useRecipeStore } from "../store/useRecipeStore";
 import { useAuthStore } from "../store/useAuthStore";
+import { useSavedRecipesStore } from "../store/useSavedRecipesStore";
 
 function RecipeDetails() {
   const { recipeId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+
   const currentUser = useAuthStore((state) => state.currentUser);
 
   const {
@@ -22,6 +24,10 @@ function RecipeDetails() {
     loadError,
     deleteRecipe
   } = useRecipeStore();
+
+  const forgetRecipe = useSavedRecipesStore(
+    (state) => state.forgetRecipe
+  );
 
   const [deleteError, setDeleteError] = useState("");
 
@@ -46,8 +52,12 @@ function RecipeDetails() {
     const removed = deleteRecipe(pickedDish.id);
 
     if (removed) {
-      navigate("/recipes", {
-        state: { notice: `"${pickedDish.name}" was deleted successfully.` }
+      forgetRecipe(pickedDish.id);
+
+      navigate("/myRecipes", {
+        state: {
+          notice: `"${pickedDish.name}" was deleted successfully.`
+        }
       });
     } else {
       setDeleteError("Couldn't delete this recipe.");
@@ -73,7 +83,10 @@ function RecipeDetails() {
 
   return (
     <section className="recipe-details">
-      <Link to="/recipes" className="back-link">
+      <Link
+        to={canManageRecipe ? "/myRecipes" : "/recipes"}
+        className="back-link"
+      >
         Back to Recipes
       </Link>
 

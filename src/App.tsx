@@ -8,9 +8,10 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import Recipes from "./pages/Recipes";
 import RecipeDetails from "./pages/RecipeDetails";
+import MyRecipes from "./pages/MyRecipes";
+import SavedRecipes from "./pages/SavedRecipes";
 import AddRecipe from "./pages/AddRecipe";
 import EditRecipe from "./pages/EditRecipe";
-import SavedRecipes from "./pages/SavedRecipes";
 import Login from "./pages/Login";
 
 import { useRecipeStore } from "./store/useRecipeStore";
@@ -34,6 +35,7 @@ function App() {
           <Route path="/login" element={<Login />} />
 
           <Route element={<ProtectedRoute />}>
+            <Route path="/myRecipes" element={<MyRecipes />} />
             <Route path="/savedRecipes" element={<SavedRecipes />} />
             <Route path="/addRecipe" element={<AddRecipe />} />
             <Route path="/editRecipe/:recipeId" element={<EditRecipe />} />

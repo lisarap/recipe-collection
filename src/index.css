@@ -578,3 +578,60 @@ body {
   color: #666;
   margin-bottom: 25px;
 }
+
+
+.my-recipes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.my-recipes-header h1 {
+  margin-bottom: 8px;
+}
+
+.my-recipes-header p {
+  color: #666;
+  margin: 0;
+}
+
+.my-recipes-header .browse-btn {
+  white-space: nowrap;
+}
+
+.my-recipe-item {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.my-recipe-item .recipe-card {
+  flex: 1;
+}
+
+.my-recipe-item .recipe-actions {
+  margin-top: 0;
+  gap: 10px;
+}
+
+.my-recipe-item .edit-recipe-btn,
+.my-recipe-item .delete-recipe-btn {
+  flex: 1;
+  text-align: center;
+  padding: 12px 8px;
+}
+
+@media (max-width: 600px) {
+  .my-recipes-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .my-recipes-header .browse-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

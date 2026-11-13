@@ -15,17 +15,19 @@ function Navbar() {
     <header className="header">
       <nav className="navbar" aria-label="Main navigation">
         <Link to="/" className="logo">
-          MyDish
+          Good Food
         </Link>
 
         <div className="nav-links">
           <Link to="/">Home</Link>
           <Link to="/recipes">Recipes</Link>
-          <Link to="/addRecipe">Add Recipe</Link>
+          <Link to="/myRecipes">My Recipes</Link>
+          <Link to="/savedRecipes">Saved Recipes</Link>
 
           {currentUser ? (
             <>
               <span className="nav-user">Hi, {currentUser}</span>
+
               <button
                 type="button"
                 className="logout-btn"
