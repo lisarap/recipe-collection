@@ -537,3 +537,44 @@ body {
   background-color: #294533;
 }
 
+
+.bookmark-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: #385c44;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.bookmark-btn:hover {
+  background-color: #e7eee8;
+}
+
+.bookmark-btn.bookmarked {
+  background-color: #385c44;
+  color: white;
+}
+
+.bookmark-btn:focus-visible {
+  outline: 3px solid #385c44;
+  outline-offset: 3px;
+}
+
+.empty-recipes {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-recipes p {
+  color: #666;
+  margin-bottom: 25px;
+}

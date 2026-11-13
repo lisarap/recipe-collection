@@ -1,6 +1,7 @@
 
 import { Link } from "react-router-dom";
 import type { Recipe } from "../types/Recipe";
+import SaveButton from "./SaveButton";
 
 type RecipeCardProps = {
   recipe: Recipe;
@@ -12,11 +13,11 @@ function RecipeCard({ recipe }: RecipeCardProps) {
       <Link to={`/recipes/${recipe.id}`} className="recipe-card-link">
         {recipe.image ? (
           <img
-          src={
-                recipe.image.startsWith("data:")
-                    ? recipe.image
-                    : `${import.meta.env.BASE_URL}${recipe.image}`
-                }
+            src={
+              recipe.image.startsWith("data:")
+                ? recipe.image
+                : `${import.meta.env.BASE_URL}${recipe.image}`
+            }
             alt={recipe.name}
             className="recipe-image"
             loading="lazy"
@@ -36,14 +37,20 @@ function RecipeCard({ recipe }: RecipeCardProps) {
 
         <div className="recipe-preview" aria-hidden="true">
           <h3>How to Make It</h3>
+
           <ol>
             {recipe.instructions.map((step, stepIndex) => (
               <li key={stepIndex}>{step}</li>
             ))}
           </ol>
-          <p className="preview-hint">Click to view the full recipe</p>
+
+          <p className="preview-hint">
+            Click to view the full recipe
+          </p>
         </div>
       </Link>
+
+      <SaveButton recipeId={recipe.id} recipeName={recipe.name} />
     </article>
   );
 }
