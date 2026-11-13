@@ -21,9 +21,11 @@ function SavedRecipes() {
     ? savedByUser[currentUser] ?? []
     : [];
 
-  const savedDishes = recipesList.filter((dish) =>
-    savedIds.includes(dish.id)
-  );
+  const savedDishes = recipesList.filter(
+    (dish) =>
+        savedIds.includes(dish.id) &&
+        (dish.isUserRecipe !== true || dish.isPublished === true)
+    );
 
   if (!hasLoaded || fetchingDishes) {
     return <p role="status">Loading recipes...</p>;

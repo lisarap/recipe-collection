@@ -13,6 +13,7 @@ type RecipeStore = {
   addRecipe: (recipeDraft: RecipeInput) => number | null;
   editRecipe: (recipeId: number, updatedDish: RecipeInput) => boolean;
   deleteRecipe: (recipeId: number) => boolean;
+  publishRecipe: (recipeId: number) => boolean;
 };
 
 export const useRecipeStore = create<RecipeStore>((set, get) => ({
@@ -40,7 +41,6 @@ export const useRecipeStore = create<RecipeStore>((set, get) => ({
     }
   },
 
-
   addRecipe: (recipeDraft) => {
     const accountName = useAuthStore.getState().currentUser;
 
@@ -53,7 +53,8 @@ export const useRecipeStore = create<RecipeStore>((set, get) => ({
       ...recipeDraft,
       id: nextId,
       isUserRecipe: true,
-      ownerId: accountName
+      ownerId: accountName,
+      isPublished: false
     };
 
     set((current) => ({
@@ -85,7 +86,8 @@ export const useRecipeStore = create<RecipeStore>((set, get) => ({
               ...updatedDish,
               id: recipeId,
               isUserRecipe: true,
-              ownerId: accountName
+              ownerId: accountName,
+              isPublished: pickedDish.isPublished === true
             }
           : dish
       )
@@ -116,7 +118,32 @@ export const useRecipeStore = create<RecipeStore>((set, get) => ({
     }));
 
     return true;
+  },
+
+  publishRecipe: (recipeId) => {
+    const accountName = useAuthStore.getState().currentUser;
+
+    const pickedDish = get().recipesList.find(
+      (dish) => dish.id === recipeId
+    );
+
+    if (
+      !accountName ||
+      pickedDish?.isUserRecipe !== true ||
+      pickedDish.ownerId !== accountName ||
+      pickedDish.isPublished === true
+    ) {
+      return false;
+    }
+
+    set((current) => ({
+      recipesList: current.recipesList.map((dish) =>
+        dish.id === recipeId
+          ? { ...dish, isPublished: true }
+          : dish
+      )
+    }));
+
+    return true;
   }
-
-
 }));

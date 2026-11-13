@@ -1,12 +1,13 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import RecipeCard from "../components/RecipeCard";
 import { useAuthStore } from "../store/useAuthStore";
 import { useRecipeStore } from "../store/useRecipeStore";
 import { useSavedRecipesStore } from "../store/useSavedRecipesStore";
 
 function MyRecipes() {
+  const location = useLocation();
   const currentUser = useAuthStore((state) => state.currentUser);
 
   const {
@@ -15,7 +16,9 @@ function MyRecipes() {
     hasLoaded,
     loadError,
     loadRecipes,
-    deleteRecipe
+    editRecipe,
+    deleteRecipe,
+    publishRecipe
   } = useRecipeStore();
 
   const forgetRecipe = useSavedRecipesStore(
@@ -31,9 +34,19 @@ function MyRecipes() {
       dish.ownerId === currentUser
   );
 
-  function removeMyDish(recipeId: number, recipeName: string) {
-    if (!currentUser) return;
+  function publishMyDish(recipeId: number) {
+    const published = publishRecipe(recipeId);
 
+    if (published) {
+      setActionError("");
+      setActionNotice("Your recipe is now published!");
+    } else {
+      setActionNotice("");
+      setActionError("Couldn't publish this recipe.");
+    }
+  }
+
+  function removeMyDish(recipeId: number, recipeName: string) {
     const confirmed = window.confirm(
       `Are you sure you want to delete "${recipeName}"?`
     );
@@ -56,7 +69,9 @@ function MyRecipes() {
     return (
       <section>
         <p role="alert">{loadError}</p>
-        <button onClick={loadRecipes}>Try again</button>
+        <button type="button" onClick={loadRecipes}>
+          Try again
+        </button>
       </section>
     );
   }
@@ -78,9 +93,9 @@ function MyRecipes() {
         </Link>
       </div>
 
-      {actionNotice && (
+      {(actionNotice || location.state?.notice) && (
         <p className="status-message" role="status">
-          {actionNotice}
+          {actionNotice || location.state?.notice}
         </p>
       )}
 
@@ -101,12 +116,18 @@ function MyRecipes() {
             <div className="my-recipe-item" key={dish.id}>
               <RecipeCard recipe={dish} />
 
+              <p className="recipe-visibility">
+                {dish.isPublished === true
+                  ? "Published"
+                  : "Private"}
+              </p>
+
               <div className="recipe-actions">
                 <Link
                   to={`/editRecipe/${dish.id}`}
                   className="edit-recipe-btn"
                 >
-                  Edit Recipe
+                  Edit
                 </Link>
 
                 <button
@@ -114,8 +135,18 @@ function MyRecipes() {
                   className="delete-recipe-btn"
                   onClick={() => removeMyDish(dish.id, dish.name)}
                 >
-                  Delete Recipe
+                  Delete
                 </button>
+
+                {dish.isPublished !== true && (
+                  <button
+                    type="button"
+                    className="publish-recipe-btn"
+                    onClick={() => publishMyDish(dish.id)}
+                  >
+                    Publish
+                  </button>
+                )}
               </div>
             </div>
           ))}

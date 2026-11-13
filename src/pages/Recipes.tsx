@@ -1,22 +1,35 @@
 
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import RecipeCard from "../components/RecipeCard";
 import { useRecipeStore } from "../store/useRecipeStore";
-import { useLocation } from "react-router-dom";
 
 function Recipes() {
-  const { recipesList, fetchingDishes, loadError, loadRecipes } =
-    useRecipeStore();
+  const {
+    recipesList,
+    fetchingDishes,
+    hasLoaded,
+    loadError,
+    loadRecipes
+  } = useRecipeStore();
+
   const location = useLocation();
+
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
 
+  const publicDishes = recipesList.filter(
+    (dish) =>
+      dish.isUserRecipe !== true ||
+      dish.isPublished === true
+  );
+
   const categories = [
     "All",
-    ...new Set(recipesList.map((dish) => dish.category))
+    ...new Set(publicDishes.map((dish) => dish.category))
   ];
 
-  const matchingDishes = recipesList.filter((dish) => {
+  const matchingDishes = publicDishes.filter((dish) => {
     const matchesSearch = dish.name
       .toLowerCase()
       .includes(search.toLowerCase());
@@ -27,23 +40,26 @@ function Recipes() {
     return matchesSearch && matchesCategory;
   });
 
-  if (fetchingDishes) {
-    return <p role="status">Loading recipes...</p>;
-  }
-
   if (loadError) {
     return (
       <div>
         <p role="alert">{loadError}</p>
-        <button onClick={loadRecipes}>Try again</button>
+        <button type="button" onClick={loadRecipes}>
+          Try again
+        </button>
       </div>
     );
+  }
+
+  if (!hasLoaded || fetchingDishes) {
+    return <p role="status">Loading recipes...</p>;
   }
 
   return (
     <section className="recipes-page">
       <h1>Explore Recipes</h1>
       <p>Find something delicious to make today.</p>
+
       {location.state?.notice && (
         <p className="status-message" role="status">
           {location.state.notice}
@@ -80,7 +96,7 @@ function Recipes() {
 
       {matchingDishes.length === 0 ? (
         <p>
-          {recipesList.length === 0
+          {publicDishes.length === 0
             ? "No recipes available yet."
             : "No recipes match your search."}
         </p>

@@ -50,7 +50,12 @@ function RecipeCard({ recipe }: RecipeCardProps) {
         </div>
       </Link>
 
-      <SaveButton recipeId={recipe.id} recipeName={recipe.name} />
+      {(recipe.isUserRecipe !== true || recipe.isPublished === true) && (
+        <SaveButton
+          recipeId={recipe.id}
+          recipeName={recipe.name}
+        />
+      )}
     </article>
   );
 }

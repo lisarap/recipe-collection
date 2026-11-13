@@ -81,6 +81,22 @@ function RecipeDetails() {
     );
   }
 
+
+  if (
+    pickedDish.isUserRecipe === true &&
+    pickedDish.isPublished !== true &&
+    !canManageRecipe
+  ) {
+    return (
+      <section>
+        <h1>Recipe unavailable</h1>
+        <p>This recipe is private.</p>
+        <Link to="/recipes">Back to Recipes</Link>
+      </section>
+    );
+  }
+
+
   return (
     <section className="recipe-details">
       <Link

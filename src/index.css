@@ -635,3 +635,32 @@ body {
     text-align: center;
   }
 }
+
+
+.recipe-visibility {
+  font-size: 14px;
+  font-weight: bold;
+  color: #385c44;
+  margin: 0;
+}
+
+.publish-recipe-btn {
+  background-color: #385c44;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 18px;
+  font-size: 15px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.publish-recipe-btn:hover {
+  background-color: #294533;
+}
+
+.my-recipe-item .recipe-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}

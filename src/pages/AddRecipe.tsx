@@ -21,8 +21,10 @@ function AddRecipe() {
       return;
     }
 
-    navigate(`/recipes/${newRecipeId}`, {
-      state: { notice: "Recipe added successfully." }
+    navigate("/myRecipes", {
+      state: {
+        notice: "Recipe saved privately. Publish it when you're ready."
+      }
     });
   }
 
