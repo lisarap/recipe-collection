@@ -1,10 +1,5 @@
-
-import { useState, type FormEvent } from "react";
-import {
-  Navigate,
-  useLocation,
-  useNavigate
-} from "react-router-dom";
+import { useState } from "react";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 
 function Login() {
@@ -14,90 +9,120 @@ function Login() {
   const { currentUser, signIn } = useAuthStore();
 
   const [accountName, setAccountName] = useState("");
-  const [password, setPassword] = useState("");
+  const [accountPassword, setAccountPassword] = useState("");
   const [loginError, setLoginError] = useState("");
 
-  function submitLogin(event: FormEvent<HTMLFormElement>) {
+  function signIntoAccount(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoginError("");
 
-    if (!/^[a-z0-9_]{3,20}$/i.test(accountName.trim())) {
-      setLoginError(
-        "Username must be 3 to 20 characters. Use letters, numbers or underscores."
-      );
+    const signedIn = signIn(accountName, accountPassword);
+
+    if (!signedIn) {
+      setLoginError("Please enter a valid username and the correct demo password.");
       return;
     }
 
-    if (!password.trim()) {
-      setLoginError("Please enter the demo password.");
-      return;
-    }
-
-    const loggedIn = signIn(accountName, password);
-
-    if (!loggedIn) {
-      setLoginError("Incorrect demo password. Try demo123.");
-      return;
-    }
-
-    navigate(location.state?.from || "/recipes", {
+    navigate(location.state?.from || "/myRecipes", {
       replace: true
     });
   }
 
   if (currentUser) {
-    return <Navigate to="/recipes" replace />;
+    return <Navigate to="/myRecipes" replace />;
   }
 
   return (
-    <section className="login-page">
-      <h1>Welcome Back</h1>
-      <p>Sign in to add and manage your recipes.</p>
+    <section className="auth-page">
+      <div className="auth-shell">
+        <div className="auth-copy">
+          <span className="auth-badge">Good Food</span>
 
-      <form className="recipe-form" onSubmit={submitLogin} noValidate>
-        <div className="form-group">
-          <label htmlFor="accountName">Username</label>
-          <input
-            id="accountName"
-            type="text"
-            autoComplete="username"
-            value={accountName}
-            onChange={(e) => setAccountName(e.target.value)}
-            placeholder="Enter your username"
-            required
-          />
-        </div>
+          <h1>Welcome Back</h1>
 
-        <div className="form-group">
-          <label htmlFor="accountPassword">Password</label>
-          <input
-            id="accountPassword"
-            type="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter the demo password"
-            required
-          />
-        </div>
-
-        {loginError && (
-          <p className="field-error" role="alert">
-            {loginError}
+          <p>
+            Sign in to save your favourite recipes, manage your own dishes,
+            and share what you cook with the Good Food community.
           </p>
-        )}
 
-        <button className="save-recipe-btn" type="submit">
-          Login
-        </button>
+          <div className="auth-note-box">
+            <h2>Why sign in?</h2>
 
-        <p className="demo-login-info">
-          Demo password: <strong>demo123</strong>
-        </p>
-        <p className="demo-login-info">
-          This is a demo login. Please don't use a real password.
-        </p>
-      </form>
+            <ul className="auth-note-list">
+              <li>Save recipes and view them later</li>
+              <li>Add, edit and delete your own recipes</li>
+              <li>Publish your recipes for everyone to see</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="auth-card">
+          <div className="auth-card-top">
+            <span className="auth-small-title">Sign In</span>
+            <h2>Access your recipe space</h2>
+            <p>
+              Use your username and the demo password to continue.
+            </p>
+          </div>
+
+          <form className="auth-form" onSubmit={signIntoAccount} noValidate>
+            <div className="auth-form-group">
+              <label htmlFor="loginName">Username</label>
+              <input
+                id="loginName"
+                type="text"
+                value={accountName}
+                onChange={(event) => setAccountName(event.target.value)}
+                placeholder="Enter your username"
+                autoComplete="username"
+                required
+              />
+            </div>
+
+            <div className="auth-form-group">
+              <label htmlFor="loginPassword">Password</label>
+              <input
+                id="loginPassword"
+                type="password"
+                value={accountPassword}
+                onChange={(event) => setAccountPassword(event.target.value)}
+                placeholder="Enter the demo password"
+                autoComplete="current-password"
+                required
+              />
+            </div>
+
+            {loginError && (
+              <p className="auth-error" role="alert">
+                {loginError}
+              </p>
+            )}
+
+            <button type="submit" className="auth-main-btn">
+              Login
+            </button>
+          </form>
+
+          <div className="auth-demo-box">
+            <p>
+              <strong>Demo password:</strong> demo123
+            </p>
+            <p>
+              This is a demo login. Please don&apos;t use a real password.
+            </p>
+          </div>
+
+          <p className="auth-bottom-link">
+            Don&apos;t have an account yet?{" "}
+            <Link
+              to="/register"
+              state={{ from: location.state?.from }}
+            >
+              Create one here
+            </Link>
+          </p>
+        </div>
+      </div>
     </section>
   );
 }
