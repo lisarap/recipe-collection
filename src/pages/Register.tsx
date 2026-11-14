@@ -1,5 +1,5 @@
 
-import { useState, type SubmitEvent } from "react";
+import { useState } from "react";
 import {
   Link,
   Navigate,
@@ -17,8 +17,7 @@ function Register() {
   const [accountName, setAccountName] = useState("");
   const [registerError, setRegisterError] = useState("");
 
-function createAccount(event: SubmitEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function createAccount() {
     setRegisterError("");
 
     const started = signIn(accountName, "demo123");
@@ -40,58 +39,107 @@ function createAccount(event: SubmitEvent<HTMLFormElement>) {
   }
 
   return (
-    <section className="login-page">
-      <h1>Create a Demo Account</h1>
+    <section className="auth-page register-page">
+      <div className="auth-shell">
 
-      <p>
-        Choose a username to start sharing and saving recipes
-        on Good Food.
-      </p>
+        <div className="auth-copy">
+          <span className="auth-badge">Good Food</span>
 
-      <form
-        className="recipe-form"
-        onSubmit={createAccount}
-        noValidate
-      >
-        <div className="form-group">
-          <label htmlFor="registerName">Username</label>
+          <h1>Join Our Kitchen</h1>
 
-          <input
-            id="registerName"
-            type="text"
-            value={accountName}
-            onChange={(event) => setAccountName(event.target.value)}
-            placeholder="Choose a username"
-            autoComplete="username"
-            required
-          />
+          <p>
+            Create your own space on Good Food.
+            Save your favourite recipes, share your
+            cooking ideas, and discover something delicious.
+          </p>
+
+          <div className="auth-note-box">
+            <h2>What can you do?</h2>
+
+            <ul className="auth-note-list">
+              <li>Save your favourite recipes</li>
+              <li>Create and manage your own dishes</li>
+              <li>Publish recipes for everyone to enjoy</li>
+            </ul>
+          </div>
         </div>
 
-        {registerError && (
-          <p className="field-error" role="alert">
-            {registerError}
-          </p>
-        )}
+        <div className="auth-card">
+          <div className="auth-card-top">
+            <span className="auth-small-title">
+              Get Started
+            </span>
 
-        <button type="submit" className="save-recipe-btn">
-          Create Account
-        </button>
+            <h2>Create an Account</h2>
 
-        <p className="demo-login-info">
-          This is a demo account for coursework.
-          No real account or password is created.
-        </p>
+            <p>
+              Choose a username to join the Good Food community.
+            </p>
+          </div>
 
-        <p>
-          Already using Good Food?{" "}
-          <Link
-            to="/login"
-            state={{ from: location.state?.from }}
+          <form
+            className="auth-form"
+            onSubmit={(event) => {
+              event.preventDefault();
+              createAccount();
+            }}
+            noValidate
           >
-            Sign In
-          </Link>
-        </p>
-      </form>
+            <div className="auth-form-group">
+              <label htmlFor="registerName">
+                Username
+              </label>
+
+              <input
+                id="registerName"
+                type="text"
+                value={accountName}
+                onChange={(event) =>
+                  setAccountName(event.target.value)
+                }
+                placeholder="Choose your username"
+                autoComplete="username"
+                required
+              />
+            </div>
+
+            {registerError && (
+              <p className="auth-error" role="alert">
+                {registerError}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="auth-main-btn"
+            >
+              Create Account
+            </button>
+          </form>
+
+          <div className="auth-demo-box">
+            <p>
+              <strong>Demo Registration</strong>
+            </p>
+
+            <p>
+              This is a demo account for coursework.
+              No real account or password is created.
+            </p>
+          </div>
+
+          <p className="auth-bottom-link">
+            Already using Good Food?{" "}
+            <Link
+              to="/login"
+              state={{ from: location.state?.from }}
+            >
+              Sign In
+            </Link>
+          </p>
+        </div>
+
+      </div>
     </section>
   );
 }

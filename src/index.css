@@ -2216,3 +2216,78 @@ body {
     transition: none;
   }
 }
+
+
+/* Register page colours */
+
+.register-page {
+  background: linear-gradient(135deg, #fff8ef, #f3e0d3);
+}
+
+.register-page .auth-copy {
+  background-color: #edcbbb;
+}
+
+.register-page .auth-badge {
+  background-color: #fff8ed;
+  color: #a55236;
+  border-color: #dfb49d;
+}
+
+.register-page .auth-copy h1 {
+  color: #633b2b;
+}
+
+.register-page .auth-note-box {
+  background-color: #fff5e9;
+  border-color: #dfb49d;
+}
+
+.register-page .auth-note-box h2 {
+  color: #854b35;
+}
+
+.register-page .auth-card {
+  background-color: #fffaf3;
+  border-color: #ead6c7;
+  box-shadow: 0 18px 40px rgba(113, 66, 43, 0.1);
+}
+
+.register-page .auth-small-title {
+  color: #a55236;
+}
+
+.register-page .auth-card-top h2 {
+  color: #633b2b;
+}
+
+.register-page .auth-form-group input {
+  background-color: #fffdf8;
+  border-color: #dfc9b9;
+}
+
+.register-page .auth-form-group input:focus {
+  border-color: #a55236;
+  box-shadow: 0 0 0 4px rgba(165, 82, 54, 0.12);
+}
+
+.register-page .auth-main-btn {
+  background-color: #a55236;
+}
+
+.register-page .auth-main-btn:hover {
+  background-color: #843e29;
+}
+
+.register-page .auth-demo-box {
+  background-color: #f8e9dc;
+  border-color: #edd2c0;
+}
+
+.register-page .auth-bottom-link a {
+  color: #a55236;
+}
+
+.register-page .auth-bottom-link a:hover {
+  color: #843e29;
+}
