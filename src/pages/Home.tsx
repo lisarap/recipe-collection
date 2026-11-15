@@ -199,25 +199,18 @@ function Home() {
       </section>
 
 
-      <section className="closing-section">
-        <h2>A LITTLE TASTE OF EVERYTHING.</h2>
 
-        <p>
-          EXPLORE, EXPERIMENT, AND MAKE EVERY MEAL YOUR OWN.
-          THERE'S ALWAYS SOMETHING DELICIOUS WAITING TO BE DISCOVERED.
-        </p>
+    <section className="closing-section">
+      <h2>A LITTLE TASTE OF EVERYTHING.</h2>
 
-        <img
-          src={`${homeImages}goodfoodLogoMark.svg`}
-          alt="Good Food"
-          className="closing-logo"
-          loading="lazy"
-        />
-      </section>
+      <p>
+        EXPLORE, EXPERIMENT, AND MAKE EVERY MEAL YOUR OWN.
+        THERE'S ALWAYS SOMETHING DELICIOUS WAITING TO BE DISCOVERED.
+      </p>
+    </section>
 
-      <footer className="home-footer">
-        <p>Good Food</p>
-      </footer>
+
+
     </div>
   );
 }

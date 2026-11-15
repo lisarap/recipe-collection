@@ -2291,3 +2291,381 @@ body {
 .register-page .auth-bottom-link a:hover {
   color: #843e29;
 }
+
+
+/* Good Food footer */
+
+
+.goodfood-footer {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  background-color: #e5e8d8;
+  color: #304735;
+  border-top: 3px solid #b1b897;
+}
+
+
+
+.footer-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 25px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 50px;
+}
+
+
+.footer-brand {
+  display: inline-block;
+  font-family: Georgia, serif;
+  font-size: 38px;
+  font-weight: bold;
+  font-style: italic;
+  color: #304735;
+  text-decoration: none;
+}
+
+.footer-brand:hover {
+  color: #587151;
+}
+
+.footer-tagline {
+  margin: 4px 0 16px;
+  color: #526249;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+.footer-description {
+  max-width: 350px;
+  color: #526249;
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.footer-links h3 {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  margin: 5px 0 10px;
+  color: #304735;
+}
+
+.footer-links a {
+  color: #526249;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: #a55236;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.goodfood-footer a:focus-visible {
+  outline: 2px solid #a55236;
+  outline-offset: 4px;
+}
+
+.footer-bottom {
+  width: 100%;
+  background-color: #939260;
+  color: white;
+  padding: 17px 25px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+
+.footer-bottom p {
+  margin: 0;
+  font-size: 12px;
+}
+
+/* Tablet */
+
+@media (max-width: 850px) {
+  .footer-content {
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 25px;
+    padding: 40px 25px;
+  }
+
+  .footer-brand {
+    font-size: 32px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px 20px;
+    padding: 35px 20px;
+  }
+
+  .footer-about {
+    grid-column: 1 / -1;
+  }
+
+  .footer-description {
+    max-width: 100%;
+  }
+
+  .footer-links h3 {
+    font-size: 19px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+  }
+}
+
+
+/* Closing section */
+
+.closing-section {
+  min-height: 360px;
+  background-color: #b1b897;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 60px 25px;
+}
+
+.closing-section h2 {
+  font-family: Georgia, serif;
+  font-size: 46px;
+  font-weight: bold;
+  color: #111;
+  margin: 0 0 15px;
+}
+
+.closing-section p {
+  max-width: 1100px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #111;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* New Good Food footer */
+
+.goodfood-footer {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  background-color: #eae6c1;
+  color: #111;
+  border: none;
+}
+
+.footer-main {
+  width: 100%;
+  max-width: 1600px;
+  min-height: 230px;
+  margin: 0 auto;
+  padding: 25px 50px;
+  display: grid;
+  grid-template-columns: 200px 1fr 260px;
+  align-items: center;
+  gap: 35px;
+}
+
+.footer-logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-logo {
+  width: 190px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.footer-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+
+.footer-menu a,
+.footer-menu span,
+.footer-menu button {
+  font-family: inherit;
+  font-size: 21px;
+  font-weight: bold;
+  color: #111;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.footer-menu button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.footer-menu a:hover,
+.footer-menu button:hover {
+  color: #536b45;
+}
+
+.footer-social {
+  min-height: 155px;
+  border-left: 2px solid #111;
+  padding-left: 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 25px;
+}
+
+.footer-social h3 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #111;
+  margin: 0;
+}
+
+.footer-social-icons {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.footer-facebook {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #000;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 43px;
+  font-weight: bold;
+  line-height: 58px;
+  text-align: center;
+}
+
+.footer-instagram {
+  display: flex;
+  align-items: center;
+  color: #444;
+}
+
+.footer-tiktok {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #000;
+  color: white;
+}
+
+/* Tablet */
+
+@media (max-width: 1050px) {
+  .footer-main {
+    grid-template-columns: 160px 1fr 200px;
+    gap: 20px;
+    padding: 30px 25px;
+  }
+
+  .footer-logo {
+    width: 155px;
+  }
+
+  .footer-menu {
+    gap: 15px;
+  }
+
+  .footer-menu a,
+  .footer-menu span,
+  .footer-menu button {
+    font-size: 17px;
+  }
+
+  .footer-social {
+    padding-left: 25px;
+  }
+
+  .footer-social-icons {
+    gap: 12px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 650px) {
+  .closing-section {
+    min-height: 290px;
+    padding: 45px 20px;
+  }
+
+  .closing-section h2 {
+    font-size: 29px;
+  }
+
+  .closing-section p {
+    font-size: 13px;
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 35px 20px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    width: 165px;
+  }
+
+  .footer-menu {
+    gap: 16px 22px;
+  }
+
+  .footer-menu a,
+  .footer-menu span,
+  .footer-menu button {
+    font-size: 16px;
+  }
+
+  .footer-social {
+    min-height: auto;
+    border-left: none;
+    border-top: 1px solid #9c9a7b;
+    padding: 25px 0 0;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .footer-social h3 {
+    font-size: 20px;
+  }
+}

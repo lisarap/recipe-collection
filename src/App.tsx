@@ -14,6 +14,7 @@ import AddRecipe from "./pages/AddRecipe";
 import EditRecipe from "./pages/EditRecipe";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Footer from "./components/Footer";
 
 import { useRecipeStore } from "./store/useRecipeStore";
 
@@ -68,7 +69,9 @@ function App() {
             }
           />
         </Routes>
+        
       </main>
+          <Footer />
     </>
   );
 }
