@@ -11,7 +11,6 @@ function Footer() {
   return (
     <footer className="goodfood-footer">
       <div className="footer-main">
-
         <Link to="/" className="footer-logo-link">
           <img
             src={`${import.meta.env.BASE_URL}images/home/goodfoodLogo.png`}
@@ -21,7 +20,9 @@ function Footer() {
         </Link>
 
         <nav className="footer-menu" aria-label="Footer navigation">
-          <span>about</span>
+          <Link to="/about">
+            about
+          </Link>
 
           <Link to="/recipes">
             recipes
@@ -40,8 +41,8 @@ function Footer() {
             </button>
           )}
 
-          <span>privacy</span>
-          <span>contact</span>
+          <Link to="/privacy">privacy</Link>
+          <Link to="/contact">contact</Link>
         </nav>
 
         <div className="footer-social">
@@ -61,7 +62,13 @@ function Footer() {
               >
                 <rect x="2" y="2" width="20" height="20" rx="6" />
                 <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                <circle
+                  cx="17.5"
+                  cy="6.5"
+                  r="1"
+                  fill="currentColor"
+                  stroke="none"
+                />
               </svg>
             </span>
 

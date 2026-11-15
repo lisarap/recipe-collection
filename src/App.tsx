@@ -3,9 +3,11 @@ import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import Home from "./pages/Home";
+import About from "./pages/About";
 import Recipes from "./pages/Recipes";
 import RecipeDetails from "./pages/RecipeDetails";
 import MyRecipes from "./pages/MyRecipes";
@@ -14,7 +16,8 @@ import AddRecipe from "./pages/AddRecipe";
 import EditRecipe from "./pages/EditRecipe";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Footer from "./components/Footer";
+import Contact from "./pages/Contact";
+import Privacy from "./pages/Privacy";
 
 import { useRecipeStore } from "./store/useRecipeStore";
 
@@ -26,37 +29,36 @@ function App() {
     loadRecipes();
   }, [loadRecipes]);
 
-  const isHomePage = location.pathname === "/";
+
+  const isFullWidthPage = ["/", "/about", "/contact","/privacy"].includes(
+    location.pathname
+  );
+
+  const pageClass = isFullWidthPage
+    ? "main-content home-content"
+    : "main-content";
+
 
   return (
     <>
       <Navbar />
 
-      <main
-        className={
-          isHomePage
-            ? "main-content home-content"
-            : "main-content"
-        }
-      >
+      <main className={pageClass}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
           <Route path="/recipes" element={<Recipes />} />
-          <Route
-            path="/recipes/:recipeId"
-            element={<RecipeDetails />}
-          />
+          <Route path="/recipes/:recipeId" element={<RecipeDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<Privacy />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/myRecipes" element={<MyRecipes />} />
             <Route path="/savedRecipes" element={<SavedRecipes />} />
             <Route path="/addRecipe" element={<AddRecipe />} />
-            <Route
-              path="/editRecipe/:recipeId"
-              element={<EditRecipe />}
-            />
+            <Route path="/editRecipe/:recipeId" element={<EditRecipe />} />
           </Route>
 
           <Route
@@ -69,9 +71,9 @@ function App() {
             }
           />
         </Routes>
-        
       </main>
-          <Footer />
+
+      <Footer />
     </>
   );
 }
